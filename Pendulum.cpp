@@ -102,9 +102,9 @@ double total_energy(State s, Params p){
 int main(){
 
     State start;
-    start.theta1 = M_PI / 2.0;
+    start.theta1 = M_PI / 3.0;
     start.omega1 = 0.0;
-    start.theta2 = M_PI / 2.0;
+    start.theta2 = M_PI / 3.0;
     start.omega2 = 0.0;
 
     Params parameter;
