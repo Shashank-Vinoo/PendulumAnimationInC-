@@ -28,8 +28,8 @@ double dtheta2(State s, Params p){
 double domega1(State s, Params p) {
     double dtheta = s.theta1 - s.theta2;
     double num = -p.m2 * p.g * std::sin(s.theta1 - 2.0*s.theta2)
-                 - 2.0 * std::sin(dtheta) * (p.m2 * p.l2 * s.omega2*s.omega2 + p.l1 * s.omega1*s.omega1 * std::cos(dtheta))
-                 - (p.m1 + p.m2) * p.g * std::sin(s.theta1);
+                 - 2.0 * std::sin(dtheta) * p.m2 * (p.l2 * s.omega2*s.omega2 + p.l1 * s.omega1*s.omega1 * std::cos(dtheta))
+                 - (2.0*p.m1 + p.m2) * p.g * std::sin(s.theta1);
     double den = p.l1 * (2.0*p.m1 + p.m2 - p.m2 * std::cos(2.0*dtheta));
     return num / den - p.b1 * s.omega1;
 }
@@ -94,14 +94,11 @@ State rk4(State s, Params p, double dt) {
     result.omega2 = s.omega2 + (dt/6.0) * (k1.omega2 + 2.0*k2.omega2 + 2.0*k3.omega2 + k4.omega2);
     return result;
 }
-
 double total_energy(State s, Params p){
     return 0.5*p.m1*p.l1*p.l1*s.omega1*s.omega1 + 0.5*p.m2*(p.l1*p.l1*s.omega1*s.omega1 
         + p.l2*p.l2*s.omega2*s.omega2 + 2.0*p.l1*p.l2*s.omega1*s.omega2*std::cos(s.theta1 - s.theta2))
         -(p.m1 + p.m2)*p.g*p.l1*std::cos(s.theta1)- p.m2*p.g*p.l2*std::cos(s.theta2);
 }
-
-
 int main(){
 
     State start;
