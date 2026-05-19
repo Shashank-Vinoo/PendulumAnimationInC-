@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(g++ Pendulum.cpp -o Pendulum)",
+      "Bash(\"./Pendulum\")"
+    ]
+  }
+}

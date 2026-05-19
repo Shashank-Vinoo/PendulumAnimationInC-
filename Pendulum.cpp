@@ -95,8 +95,38 @@ State rk4(State s, Params p, double dt) {
     return result;
 }
 
+double total_energy(State s, Params p){
+    return 0.5*p.m1*p.l1*p.l1*s.omega1*s.omega1 + 0.5*p.m2*(p.l1*p.l1*s.omega1*s.omega1 
+        + p.l2*p.l2*s.omega2*s.omega2 + 2.0*p.l1*p.l2*s.omega1*s.omega2*std::cos(s.theta1 - s.theta2))
+        -(p.m1 + p.m2)*p.g*p.l1*std::cos(s.theta1)- p.m2*p.g*p.l2*std::cos(s.theta2);
+}
 
 
+int main(){
+
+    State start;
+    start.theta1 = M_PI / 3.0;
+    start.omega1 = 0.0;
+    start.theta2 = M_PI / 3.0;
+    start.omega2 = 0.0;
+
+    Params parameter;
+    parameter.l1 = 1.0;
+    parameter.l2 = 1.0;
+    parameter.m1 = 1.0;
+    parameter.m2 = 1.0;
+    parameter.b1 = 0.0;
+    parameter.b2 = 0.0;
+    parameter.g  = 9.81;
+
+    int N=10000;
+
+    for(int i=0;i<N;i++){
+        start = rk4(start,parameter,1e-3);
+        std::cout << start.theta1 << ", " << start.theta2 << ", " << total_energy(start, parameter) << std::endl;
+    }
+
+}
 
 
 
